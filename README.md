@@ -19,3 +19,7 @@ Initialize the database and run the development server:
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Default user credentials are `admin` and `password123`.
+
+TODO: 
+- Allow new registered users. Do not show all created forms to all logged in users, but keep track of which user is logged in and show his forms only.
+- AI generation works based on the form name. This could be easily expended to allow full prompts instead.
