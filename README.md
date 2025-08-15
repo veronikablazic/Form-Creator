@@ -1,12 +1,20 @@
 ## Getting Started
 
-First, run the development server:
-
+Create a .env file with the following variables:
 ```bash
-    npm run dev
+    DATABASE_URL="file:./dev.db"
+    JWT_SECRET="515f50aca802bc2f411dec6fab6e4712f7fca5b63516db1671519866f767d90b"
+    OPENAI_API_KEY="your-openai-api-key"
 ```
 
-Replace the `OPENAI_API_KEY` in the `.env` file with a valid openAI API key.
+Initialize the database and run the development server:
+
+```bash
+    npm install
+    npx prisma db pull
+    npx prisma generate
+    npm run dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
