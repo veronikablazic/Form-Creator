@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// any changes:
+// npx prisma db push
+// npx prisma generate
+// npx prisma db seed
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Form {
+  id        String    @id @default(cuid())
+  title     String
+  createdAt DateTime  @default(now())
+  sections  Section[]
+  responses FormResponse[]
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  title     String
+  sortIndex Int      
+  createdAt DateTime @default(now())
+  formId    String
+  form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  fields    Field[]
+}
+
+model Field {
+  id        String   @id @default(cuid())
+  title     String
+  type      String   
+  createdAt DateTime @default(now())
+  sectionId String
+  section   Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  responses FieldResponse[]
+}
+
+model FormResponse {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  formId    String
+  form      Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  answers   FieldResponse[]
+}
+
+model FieldResponse {
+  id        String    @id @default(cuid())
+  value     String  
+  responseId String
+  response   FormResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  fieldId    String
+  field      Field        @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+}
