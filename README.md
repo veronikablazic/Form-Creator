@@ -21,5 +21,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Default user credentials are `admin` and `password123`.
 
 TODO: 
-- Allow new registered users. Do not show all created forms to all logged in users, but keep track of which user is logged in and show his forms only.
+- Allow new registered users. Do not show all created forms to all logged in users, but keep track of which user is logged in and show their forms only.
 - AI generation works based on the form name. This could be easily expended to allow full prompts instead.
