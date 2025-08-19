@@ -34,11 +34,18 @@ const ViewFormPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (!formId) return;
+    if (!formId) {
+      return;
+    } 
+    
     const fetchForm = async () => {
       try {
         const response = await fetch(`/api/forms/${formId}`);
-        if (!response.ok) throw new Error('Failed to fetch form data.');
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch form data.');
+        }
+
         const data = await response.json();
         setForm(data);
       } catch (err) {
@@ -115,14 +122,14 @@ const ViewFormPage = () => {
                     </label>
                     <div className="mt-2">
                         <input
-                        type={field.type}
-                        name={field.id}
-                        id={field.id}
-                        value={formData[field.id] || ''}
-                        onChange={(e) => handleInputChange(field.id, e.target.value)}
-                        placeholder={`Enter ${field.title.toLowerCase()}`}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
+                          type={field.type}
+                          name={field.id}
+                          id={field.id}
+                          value={formData[field.id] || ''}
+                          onChange={(e) => handleInputChange(field.id, e.target.value)}
+                          placeholder={`Enter ${field.title.toLowerCase()}`}
+                          className="flex-grow block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                          required
                         />
                     </div>
                     </div>
@@ -137,12 +144,12 @@ const ViewFormPage = () => {
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
             >
                 {isSubmitting ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                <>
-                    <Send className="mr-2 h-5 w-5" />
-                    Submit
-                </>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                  <>
+                      <Send className="mr-2 h-5 w-5" />
+                      Submit
+                  </>
                 )}
             </button>
             </div>

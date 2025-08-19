@@ -1,18 +1,17 @@
-// middleware.ts
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const authCookie = req.cookies.get('auth-token');
+  const publicFormsRegex = /^\/forms\/(c[a-z0-9]+)$/;
 
   if (pathname === '/') {
     return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
   const isPublicPath =
-    pathname.startsWith('/forms/') ||
+    publicFormsRegex.test(pathname) ||
     pathname === '/login';
 
   if (isPublicPath) {
@@ -28,6 +27,7 @@ export function middleware(req: NextRequest) {
     loginUrl.searchParams.set('from', pathname);
     return NextResponse.redirect(loginUrl);
   }
+
   return NextResponse.next();
 }
 

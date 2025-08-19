@@ -7,19 +7,19 @@ export async function GET(
   request: Request,
   { params }: { params: { formId: string } }
 ) {
-    const { formId } = await params;
+    const { formId } = params;
 
     try {
         const form = await prisma.form.findUnique({
-            where: { id: formId },
-            include: {
-                sections: {
-                orderBy: { sortIndex: 'asc' },
-                include: {
-                    fields: true,
-                },
-                },
+          where: { id: formId },
+          include: {
+            sections: {
+              orderBy: { sortIndex: 'asc' },
+              include: {
+                  fields: true,
+              },
             },
+          },
         });
 
         if (!form) {
@@ -43,7 +43,7 @@ export async function DELETE(
     await prisma.form.delete({
       where: { id: formId },
     });
-    return new NextResponse(null, { status: 204 });
+    return NextResponse.json(null, { status: 204 });
   } catch (error) {
     console.error('Failed to delete form:', error);
     return NextResponse.json({ message: 'Error deleting form' }, { status: 500 });

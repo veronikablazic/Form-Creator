@@ -12,7 +12,7 @@ type Section = {
   created_at: string;
 };
 
-type FieldType = 'text' | 'email';
+type FieldType = 'text' | 'number';
 
 type Field = {
     id: string,
@@ -185,7 +185,7 @@ const CreateForm = () => {
                                         <div key={field.id}>
                                             <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-200">{field.title || 'Untitled Field'}</label>
                                             <div className="mt-2">
-                                                <input type={field.type} name={field.id} id={field.id} placeholder={field.type === 'email' ? 'john.doe@example.com' : 'User input goes here'} className="block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all duration-150" />
+                                                <input type={field.type} name={field.id} id={field.id} placeholder={field.type === 'number' ? '0' : 'User input goes here'} className="block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-all duration-150" />
                                             </div>
                                         </div>
                                     ))}
@@ -230,7 +230,7 @@ const CreateForm = () => {
                                         <input type="text" value={field.title} onChange={(e) => handleFieldTitleChange(index, e.target.value)} placeholder={`Field ${index + 1} Title`} className="flex-grow block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600" />
                                         <select value={field.type} onChange={(e) => handleFieldTypeChange(index, e.target.value as FieldType)} className="rounded-md border-0 py-2.5 px-3.5 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                             <option value="text">Text</option>
-                                            <option value="email">Email</option>
+                                            <option value="number">Number</option>
                                         </select>
                                     </div>
                                 ))}

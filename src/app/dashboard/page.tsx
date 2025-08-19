@@ -23,9 +23,11 @@ const DashboardPage: NextPage = () => {
         const fetchForms = async () => {
             try {
                 const response = await fetch('/api/forms');
+                
                 if (!response.ok) {
                     throw new Error('Failed to fetch forms');
                 }
+
                 const data: Form[] = await response.json();
                 setForms(data);
             } catch (error) {
@@ -37,14 +39,6 @@ const DashboardPage: NextPage = () => {
 
         fetchForms();
     }, []);
-
-    const handleCreateForm = () => {
-        router.push(`/forms/new`);
-    };
-
-    const handleAccessForm = (formId: string) => {
-        router.push(`/forms/${formId}`);
-    };
 
     const openDeleteConfirm = (formId: string) => {
         setFormToDelete(formId);
@@ -58,12 +52,9 @@ const DashboardPage: NextPage = () => {
     
     const handleCopyUrl = (formId: string) => {
         const url = `${window.location.origin}/forms/${formId}`;
-        navigator.clipboard.writeText(url).then(() => {
-            setCopiedFormId(formId);
-            setTimeout(() => setCopiedFormId(null), 2000); // Reset after 2 seconds
-        }).catch(err => {
-            console.error('Failed to copy URL: ', err);
-        });
+        navigator.clipboard.writeText(url);
+        setCopiedFormId(formId);
+        setTimeout(() => setCopiedFormId(null), 2000); 
     };
 
     const handleLogout = async () => {
@@ -104,7 +95,7 @@ const DashboardPage: NextPage = () => {
                     </div>
                     <div className="flex items-center space-x-3 mt-4 sm:mt-0">
                         <button
-                            onClick={handleCreateForm}
+                            onClick={() => router.push(`/forms/new`)}
                             className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 border border-transparent text-sm font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
                         >
                             <Plus className="mr-2 h-5 w-5" />
@@ -148,7 +139,7 @@ const DashboardPage: NextPage = () => {
                                             {copiedFormId === form.id ? <Check className="h-4 w-4 inline mr-1 text-green-600" /> : <Copy className="h-4 w-4 inline mr-1" />}
                                             {copiedFormId === form.id ? 'Copied!' : 'Copy URL'}
                                         </button>
-                                        <button onClick={() => handleAccessForm(form.id)} className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                                        <button onClick={() => router.push(`/forms/${form.id}`)} className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                                             View Form
                                         </button>
                                         <button onClick={() => openDeleteConfirm(form.id)} className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
